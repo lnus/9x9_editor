@@ -61,7 +61,6 @@ export function HomePage() {
   return (
     <div>
       <Container>
-        {/* <ColorSchemeToggle /> */}
         <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
 
         {nbtData && jsonData && (
