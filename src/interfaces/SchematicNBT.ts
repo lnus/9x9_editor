@@ -31,4 +31,11 @@ interface BlockState {
 
 // TODO: Actually build this out, sometime...
 // Currently just a placeholder
-export interface SchematicNBT extends NBTData {}
+// Keep this exactly the same, for testing
+export interface SchematicNBT extends NBTData {
+  data: {
+    data: any[];
+    header: any;
+    pos: any[];
+  };
+}

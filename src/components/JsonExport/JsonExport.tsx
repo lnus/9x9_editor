@@ -1,20 +1,13 @@
-import { Root } from '@/interfaces/Gadget';
+import { SchematicJSON } from '@/interfaces/SchematicJSON';
 import { Button, rem, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy, IconCheck } from '@tabler/icons-react';
 
-export function ButtonCopy({ rootObject }: { rootObject: Root | null }) {
+export const JsonExport = ({ jsonData }: { jsonData: SchematicJSON }) => {
   const clipboard = useClipboard();
-
-  // Convert the root object to a JSON string
-  const convertToJSON = () => {
-    console.log(rootObject);
-    return JSON.stringify(rootObject, null, 2);
-  };
-
   return (
     <Tooltip
-      label="JSON copied to clipboard"
+      label="JSON copied!"
       offset={5}
       position="bottom"
       radius="xl"
@@ -37,11 +30,11 @@ export function ButtonCopy({ rootObject }: { rootObject: Root | null }) {
           section: { marginLeft: rem(22) },
         }}
         onClick={() => {
-          clipboard.copy(convertToJSON());
+          clipboard.copy(JSON.stringify(jsonData));
         }}
       >
-        Copy JSON to clipboard
+        Copy schematic to clipboard
       </Button>
     </Tooltip>
   );
-}
+};

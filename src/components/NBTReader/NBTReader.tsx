@@ -61,6 +61,8 @@ export function NBTReader({
   };
 
   const handleBody = async (body: string) => {
+    console.log('Handling body', body);
+
     // Body is a base64 encoded string
     const binaryString = atob(body);
 
@@ -71,12 +73,20 @@ export function NBTReader({
       bytes[i] = binaryString.charCodeAt(i);
     }
 
+    console.log('Decoded base64', bytes);
+
+    // Not used, this is just for debugging recompression
+    // NOTE: This just prints the uncompressed data
+    // This is useful to read the original size of the data
+    const decompressed = pako.inflate(bytes);
+    console.log('Decompressed data', decompressed);
+
     try {
-      const data = await NBT.read(bytes);
+      const data = (await NBT.read(bytes)) as SchematicNBT;
+
+      console.log('Parsed NBT data', data);
 
       setNbtData(data);
-
-      console.log(data);
 
       notifications.show({
         title: 'Schematic uploaded 🥳',

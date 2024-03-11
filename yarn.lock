@@ -2375,6 +2375,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/modals@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@mantine/modals@npm:7.6.1"
+  peerDependencies:
+    "@mantine/core": 7.6.1
+    "@mantine/hooks": 7.6.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 048ca9f120b2b484ce338a8d58b9f1a963f653b68efed65f7db6659a09d6d26e5b7a28f1cf9906a7ed313cde032ce52fd2be9b11fd1b34e0a30442602324dcb9
+  languageName: node
+  linkType: hard
+
 "@mantine/notifications@npm:^7.6.1":
   version: 7.6.1
   resolution: "@mantine/notifications@npm:7.6.1"
@@ -9179,6 +9191,7 @@ __metadata:
     "@mantine/core": "npm:7.6.1"
     "@mantine/dropzone": "npm:^7.6.1"
     "@mantine/hooks": "npm:7.6.1"
+    "@mantine/modals": "npm:^7.6.1"
     "@mantine/notifications": "npm:^7.6.1"
     "@mantinex/mantine-logo": "npm:^1.0.1"
     "@storybook/addon-essentials": "npm:^7.6.6"

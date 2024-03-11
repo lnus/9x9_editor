@@ -1,19 +1,48 @@
 import { SchematicJSON, RootEntry } from '@/interfaces/SchematicJSON';
-import {
-  Text,
-  Image,
-  Badge,
-  Button,
-  Card,
-  Group,
-  Grid,
-  Title,
-  TextInput,
-  Center,
-} from '@mantine/core';
+import { Text, Image, Badge, Button, Card, Group, Grid, TextInput } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { useState } from 'react';
+import { IconHash } from '@tabler/icons-react';
+import { Autocomplete } from '@mantine/core';
+import { MinecraftItems } from '@/data/MinecraftItems';
 
-function ItemDisplay({ item }: { item: RootEntry }) {
+// TODO: Fix any types, I'm just lazy at the moment
+const ModalContent = ({ name, updateItem }: any) => {
+  const [value, setValue] = useState('');
+
+  const handleConfirm = () => {
+    updateItem(name, value);
+    modals.closeAll();
+  };
+
+  return (
+    <Group justify="center">
+      <Autocomplete
+        data={MinecraftItems}
+        placeholder="New type"
+        value={value}
+        onChange={setValue}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            handleConfirm();
+          }
+        }}
+      />
+
+      <Button color="teal" onClick={() => handleConfirm()}>
+        Confirm change
+      </Button>
+    </Group>
+  );
+};
+
+function ItemDisplay({
+  item,
+  updateItem,
+}: {
+  item: RootEntry;
+  updateItem: (oldItem: string, newItem: string) => void;
+}) {
   const name = item.item.id;
   const count = item.count;
   const icon = 'https://via.placeholder.com/150';
@@ -28,7 +57,18 @@ function ItemDisplay({ item }: { item: RootEntry }) {
           <Text>{name}</Text>
           <Badge>{count}</Badge>
         </Group>
-        {/* <Button>Change Name</Button> */}
+        {/* Open a modal to change the name */}
+        <Button
+          onClick={() => {
+            modals.open({
+              centered: true,
+              title: 'Change item type',
+              children: <ModalContent name={name} updateItem={updateItem} />,
+            });
+          }}
+        >
+          Change Name
+        </Button>
       </Card>
     </Grid.Col>
   );
@@ -36,16 +76,19 @@ function ItemDisplay({ item }: { item: RootEntry }) {
 
 export function MaterialList({
   jsonData,
-  setJsonData,
+  setJsonData, // Might not be used here
+  updateItem,
 }: {
   jsonData: SchematicJSON;
   setJsonData: (json: SchematicJSON) => void;
+  updateItem: (oldItem: string, newItem: string) => void;
 }) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  if (!jsonData) {
-    return <p>No JSON data found</p>;
-  }
+  // This is checked in the parent component
+  // if (!jsonData) {
+  //   return <p>No JSON data found</p>;
+  // }
 
   return (
     <div>
@@ -62,7 +105,7 @@ export function MaterialList({
             return item.item.id.toLowerCase().includes(searchQuery.toLowerCase());
           })
           .map((item, index) => (
-            <ItemDisplay key={index} item={item} />
+            <ItemDisplay key={index} item={item} updateItem={updateItem} />
           ))}
       </Grid>
     </div>
