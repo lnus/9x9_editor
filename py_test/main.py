@@ -1,14 +1,12 @@
 import json
 import base64
-import nbtlib
 import gzip
 import io
 from nbtlib import File  # Good class
 
-# TODO Do rewrite of the code within File.from_fileobj
 
-
-# Attempted rewrite of nbtlib's code.
+# Tiny reimplementation of nbtlib.load, but using bytes rather than a temporary file
+# Still requires the nbtlib.File class.
 def load_from_bytes(byte_data, *, gzipped=None, byteorder="big"):
     """Load NBT data from a bytes object.
 
@@ -40,17 +38,8 @@ with open("2.1.0.json") as f:
 
     # Decode the Base64 data and print it (Should be GZip compressed)
     decoded = base64.b64decode(body)
+    nbtfile = load_from_bytes(decoded, gzipped=True)
 
-    # Use nbtlib to parse the NBT data
-    # nbt.load only accepts file-like objects, so write a temporary file.
-    # There has to be a better way to do this, but I'm not cooking right now.
-    with open("temp.nbt", "wb") as f:
-        f.write(decoded)
-
-    with nbtlib.load("temp.nbt", gzipped=True) as nbtfile:
-        # Iterate over the "tags"
-        for tag in nbtfile["data"]:
-            state = tag["state"]
-            block_id = state["Name"]
-            print(block_id)
-            print(state)
+    # Print the NBT data
+    for tag in nbtfile["data"]:
+        print(tag)

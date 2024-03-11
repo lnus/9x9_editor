@@ -1,4 +1,4 @@
-export interface Root {
+export interface SchematicJSON {
   header: Header;
   body: string;
 }

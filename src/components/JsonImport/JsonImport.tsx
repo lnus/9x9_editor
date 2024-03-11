@@ -3,7 +3,6 @@ import { Button, Modal, JsonInput, Group } from '@mantine/core';
 import { useState } from 'react';
 import { notifications } from '@mantine/notifications';
 import { Root } from '@/interfaces/Gadget';
-import { parse } from 'prismarine-nbt';
 import { Buffer } from 'buffer';
 
 export function JsonModal({ setRootObject }: { setRootObject: (root: Root) => void }) {
