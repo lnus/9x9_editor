@@ -1,5 +1,16 @@
 import { SchematicJSON, RootEntry } from '@/interfaces/SchematicJSON';
-import { Text, Image, Badge, Button, Card, Group, Grid, TextInput } from '@mantine/core';
+import {
+  Text,
+  Image,
+  Badge,
+  Button,
+  Card,
+  Group,
+  Grid,
+  TextInput,
+  Tabs,
+  TabsList,
+} from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react';
 import { Autocomplete } from '@mantine/core';
@@ -106,29 +117,27 @@ export function MaterialList({
         m="lg"
         onChange={(event) => setSearchQuery(event.currentTarget.value)}
       />
-      {mods.map((mod, index) => (
-        <div>
-          <Text key={index} size="xl">
-            {mod.slice(0, 1).toUpperCase() + mod.slice(1)}
-          </Text>
-
-          {/* TODO: This is really inefficient, we should use a better way to group the items
-
-          Iterate over the items which have the same mod
-          This is a bit more complex, but it's doable
-
-          For some reason this is the only way to force re-rendering when
-          items change groups 
-          */}
-          {items.map((item, index) => (
-            <div key={index}>
-              {item.item.id.split(':')[0] === mod && (
-                <ItemDisplay key={item.item.id} item={item} updateItem={updateItem} />
-              )}
-            </div>
+      <Tabs color="red">
+        <Tabs.List>
+          {mods.map((mod, index) => (
+            <Tabs.Tab key={index} value={mod}>
+              <Text size="xl">{mod.slice(0, 1).toUpperCase() + mod.slice(1)}</Text>
+            </Tabs.Tab>
           ))}
-        </div>
-      ))}
+        </Tabs.List>
+
+        {mods.map((mod, index) => (
+          <Tabs.Panel key={index} value={mod}>
+            {items.map((item, index) => (
+              <div key={index}>
+                {item.item.id.split(':')[0] === mod && (
+                  <ItemDisplay key={item.item.id} item={item} updateItem={updateItem} />
+                )}
+              </div>
+            ))}
+          </Tabs.Panel>
+        ))}
+      </Tabs>
     </div>
   );
 }
