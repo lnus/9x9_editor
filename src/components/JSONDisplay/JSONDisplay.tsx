@@ -1,20 +1,22 @@
 import { SchematicJSON, RootEntry } from '@/interfaces/SchematicJSON';
 import {
   Text,
-  Image,
-  Badge,
   Button,
-  Card,
   Group,
-  Grid,
   TextInput,
   Tabs,
-  TabsList,
+  Paper,
+  ThemeIcon,
+  rem,
+  Center,
+  Container,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react';
 import { Autocomplete } from '@mantine/core';
 import { MinecraftItems } from '@/data/MinecraftItems';
+import { Icon3dCubeSphere, IconCompass } from '@tabler/icons-react';
+import classes from './StatsCard.module.css';
 
 const ModalContent = ({
   name,
@@ -60,27 +62,55 @@ function ItemDisplay({
 }) {
   const name = item.item.id;
   const count = item.count;
-  const icon = 'https://via.placeholder.com/150';
 
   return (
-    <Card style={{ padding: '1em' }}>
-      <Group justify="center" gap="sm">
-        <Text>{name}</Text>
-        <Badge>{count}</Badge>
-      </Group>
-      {/* Open a modal to change the name */}
-      <Button
-        onClick={() => {
-          modals.open({
-            centered: true,
-            title: 'Change item type',
-            children: <ModalContent name={name} updateItem={updateItem} />,
-          });
-        }}
-      >
-        Change Name
-      </Button>
-    </Card>
+    <Paper radius="md" withBorder className={classes.card} mb={32}>
+      <ThemeIcon className={classes.icon} size={60} radius={60}>
+        <IconCompass style={{ width: rem(32), height: rem(32) }} stroke={1.5} />
+      </ThemeIcon>
+
+      <Text p={10} ta="center" fw={700} fz="lg" className={classes.title}>
+        {name}
+      </Text>
+      <Text c="dimmed" ta="center" fz="md">
+        {count}
+      </Text>
+
+      <Center>
+        <Button
+          color="red"
+          m="sm"
+          onClick={() => {
+            modals.open({
+              centered: true,
+              title: 'Change item type',
+              children: <ModalContent name={name} updateItem={updateItem} />,
+            });
+          }}
+        >
+          Change Item Type
+        </Button>
+      </Center>
+    </Paper>
+
+    // <Card style={{ padding: '1em' }}>
+    //   <Group justify="center" gap="sm">
+    //     <Text>{name}</Text>
+    //     <Badge>{count}</Badge>
+    //   </Group>
+    //   {/* Open a modal to change the name */}
+    //   <Button
+    //     onClick={() => {
+    //       modals.open({
+    //         centered: true,
+    //         title: 'Change item type',
+    //         children: <ModalContent name={name} updateItem={updateItem} />,
+    //       });
+    //     }}
+    //   >
+    //     Change Name
+    //   </Button>
+    // </Card>
   );
 }
 
@@ -104,12 +134,15 @@ export function MaterialList({
     setItems(newItems); // This is just visual, the original data is not changed
 
     // Get all the mods
+    // TODO: This doesn't force reload the DOM
+    // At least when the search list is empty
+    // This can be solved by searching and then unsearching
     const mods = newItems.map((item) => item.item.id.split(':')[0]);
     setMods(Array.from(new Set(mods)));
   }, [jsonData, searchQuery]);
 
   return (
-    <div>
+    <Container>
       <TextInput
         placeholder="Search for an item"
         radius="md"
@@ -117,17 +150,17 @@ export function MaterialList({
         m="lg"
         onChange={(event) => setSearchQuery(event.currentTarget.value)}
       />
-      <Tabs color="red">
+      <Tabs color="red" radius="xs">
         <Tabs.List>
           {mods.map((mod, index) => (
-            <Tabs.Tab key={index} value={mod}>
+            <Tabs.Tab key={index} value={mod} leftSection={<Icon3dCubeSphere />}>
               <Text size="xl">{mod.slice(0, 1).toUpperCase() + mod.slice(1)}</Text>
             </Tabs.Tab>
           ))}
         </Tabs.List>
 
         {mods.map((mod, index) => (
-          <Tabs.Panel key={index} value={mod}>
+          <Tabs.Panel key={index} value={mod} p={30}>
             {items.map((item, index) => (
               <div key={index}>
                 {item.item.id.split(':')[0] === mod && (
@@ -138,6 +171,6 @@ export function MaterialList({
           </Tabs.Panel>
         ))}
       </Tabs>
-    </div>
+    </Container>
   );
 }
