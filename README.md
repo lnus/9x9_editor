@@ -1,4 +1,20 @@
-# Mantine Vite template
+# 9x9 Editor
+
+For-fun project that allows editing of pastes from [9x9](https://reddit.com/r/9x9).
+
+Essentially, allows editing of pastes from the Building Gadgets mod.
+
+## TODO List
+
+- [ ] Create a coherent design for the website
+- [ ] Add support for editing the header
+- [ ] Add support for 1.20.* version of the mod
+- [ ] Add support for 1.12.* version of the mod
+- [ ] Add paste sharing
+- [ ] Add paste saving (kinda the same as above)
+- [ ] Paste preview (This will be really really trickt I think)
+
+# Build Instructions (Mantine + Vite template)
 
 ## Features
 
