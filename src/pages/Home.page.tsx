@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { NBTReader } from '@/components/NBTReader/NBTReader';
-import { ColorSchemeToggle } from '@/components/ColorSchemeToggle/ColorSchemeToggle';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
 import { NBTDisplay } from '@/components/NBTReader/NBTDisplay';
-import { Button, Center, Code, Drawer } from '@mantine/core';
+import { Button, Center, Collapse, Container, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MaterialList } from '@/components/JSONDisplay/JSONDisplay';
-import { NavbarMinimal } from '@/components/NavbarMinimal/NavbarMinimal';
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
 import { notifications } from '@mantine/notifications';
 import { NBTWriter } from '@/components/NBTReader/NBTWriter';
 import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
 import { JsonExport } from '@/components/JsonExport/JsonExport';
+import { CodeHighlight } from '@mantine/code-highlight';
 
 export function HomePage() {
-  const [drawerOpened, { open, close }] = useDisclosure(false);
+  const [debugInfo, { toggle }] = useDisclosure(false);
   const [jsonData, setJsonData] = useState<SchematicJSON | null>(null);
   const [nbtData, setNbtData] = useState<SchematicNBT | null>(null);
 
@@ -61,38 +60,34 @@ export function HomePage() {
 
   return (
     <div>
-      {/* <ColorSchemeToggle /> */}
-      <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
+      <Container>
+        {/* <ColorSchemeToggle /> */}
+        <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
 
-      {nbtData && jsonData && (
-        <div>
-          <NBTWriter nbtData={nbtData} jsonData={jsonData} setJsonData={setJsonData} />
-          <JsonExport jsonData={jsonData as SchematicJSON} />
-        </div>
-      )}
+        {nbtData && jsonData && (
+          <div>
+            <NBTWriter nbtData={nbtData} jsonData={jsonData} setJsonData={setJsonData} />
+            <JsonExport jsonData={jsonData as SchematicJSON} />
+          </div>
+        )}
 
-      {jsonData && (
-        <MaterialList jsonData={jsonData} setJsonData={setJsonData} updateItem={updateItem} />
-      )}
+        {jsonData && (
+          <MaterialList jsonData={jsonData} setJsonData={setJsonData} updateItem={updateItem} />
+        )}
 
-      <Drawer
-        opened={drawerOpened}
-        onClose={close}
-        radius="md"
-        offset={8}
-        position="bottom"
-        size="xl"
-        withCloseButton={false}
-      >
-        <h1>JSON Data</h1>
-        <Code>{JSON.stringify(jsonData, null, 2)}</Code>
+        <Center p="sm">
+          <Button onClick={toggle}>Display debug information</Button>
+        </Center>
 
-        <NBTDisplay nbtData={nbtData as SchematicNBT} />
-      </Drawer>
+        <Collapse in={debugInfo}>
+          <Container>
+            <Title>JSON Data</Title>
+            <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
 
-      <Center p="sm">
-        <Button onClick={open}>Display debug information</Button>
-      </Center>
+            <NBTDisplay nbtData={nbtData as SchematicNBT} />
+          </Container>
+        </Collapse>
+      </Container>
     </div>
   );
 }

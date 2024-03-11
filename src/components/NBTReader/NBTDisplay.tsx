@@ -1,26 +1,21 @@
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
-import { Code } from '@mantine/core';
+import { CodeHighlight } from '@mantine/code-highlight';
+import { Title } from '@mantine/core';
 
 export function NBTDisplay({ nbtData }: { nbtData: SchematicNBT }) {
-  // We need to convert BigInts to strings
-  // This is a *very* temporary solution
-  const convertBigInts = (obj: any) => {
-    for (const key in obj) {
-      if (typeof obj[key] === 'bigint') {
-        obj[key] = obj[key].toString();
-      }
-      if (typeof obj[key] === 'object') {
-        convertBigInts(obj[key]);
-      }
-    }
-
-    return obj;
-  };
+  if (nbtData == null) {
+    return (
+      <div>
+        <Title>NBT Data</Title>
+        <CodeHighlight code={JSON.stringify(null)} />
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1>NBT Data</h1>
-      <Code>{JSON.stringify(convertBigInts(nbtData), null, 2)}</Code>
+      <Title>NBT Data</Title>
+      <CodeHighlight code={JSON.stringify(nbtData.data.data, null, 2)} />
     </div>
   );
 }

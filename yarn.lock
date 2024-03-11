@@ -2334,6 +2334,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/code-highlight@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@mantine/code-highlight@npm:7.6.1"
+  dependencies:
+    clsx: "npm:2.1.0"
+    highlight.js: "npm:^11.9.0"
+  peerDependencies:
+    "@mantine/core": 7.6.1
+    "@mantine/hooks": 7.6.1
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: cb576ffc3378a2e3861f027cde8f2af9cdd15cdd2af062e2ce7c18ac16d70fc29f5654e2454f13ab3a9196565dc650ba0dea0aeb826a5f0df0d5836f80394e9f
+  languageName: node
+  linkType: hard
+
 "@mantine/core@npm:7.6.1":
   version: 7.6.1
   resolution: "@mantine/core@npm:7.6.1"
@@ -7964,6 +7979,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highlight.js@npm:^11.9.0":
+  version: 11.9.0
+  resolution: "highlight.js@npm:11.9.0"
+  checksum: 27cfa8717dc9d200aecbdb383eb122d5f45ce715d2f468583785d36fbfe5076ce033abb02486dc13b407171721cda6f474ed3f3a5a8e8c3d91367fa5f51ee374
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -9188,6 +9210,7 @@ __metadata:
   resolution: "mantine-vite-template@workspace:."
   dependencies:
     "@formkit/auto-animate": "npm:^0.8.1"
+    "@mantine/code-highlight": "npm:^7.6.1"
     "@mantine/core": "npm:7.6.1"
     "@mantine/dropzone": "npm:^7.6.1"
     "@mantine/hooks": "npm:7.6.1"

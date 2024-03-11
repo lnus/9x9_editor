@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
+    "@mantine/code-highlight": "^7.6.1",
     "@mantine/core": "7.6.1",
     "@mantine/dropzone": "^7.6.1",
     "@mantine/hooks": "7.6.1",
