@@ -15,16 +15,17 @@ export function NBTReader({
   setNbtData: (nbt: SchematicNBT) => void;
   setJsonData: (json: any) => void;
 }) {
-  // ANCHOR: Data state
-  // TODO: Remove this state management
-
   // ANCHOR: UX state
   const theme = useMantineTheme();
   const openRef = useRef<() => void>(null);
+  const [loading, setLoading] = useState(false);
 
   const onDrop = (files: File[]) => {
     // TODO: Maybe failsafe and check if MIME type is correct
     console.log('Files dropped', files);
+
+    // Set loading state
+    setLoading(true);
 
     // We only process one schematic anyways
     // So, assume first file is the correct one
@@ -88,6 +89,9 @@ export function NBTReader({
 
       setNbtData(data);
 
+      // Set loading state
+      setLoading(false);
+
       notifications.show({
         title: 'Schematic uploaded 🥳',
         message: 'The schematic was successfully uploaded and parsed',
@@ -102,21 +106,13 @@ export function NBTReader({
         color: 'red',
       });
     }
-
-    // TODO: This works, but NBTify decompresses anyways
-    // If that somehow fails, we can use this
-    // try {
-    // const decompressed = pako.inflate(bytes);
-    // const buffer = decompressed.buffer;
-    // } catch (error) {
-    //   console.error('Error decompressing', error);
-    // }
   };
 
   // TODO: Rework some styles
   return (
     <div className={classes.wrapper}>
       <Dropzone
+        loading={loading}
         openRef={openRef}
         onDrop={onDrop}
         className={classes.dropzone}
@@ -147,7 +143,7 @@ export function NBTReader({
 
           <Text ta="center" fw={700} fz="lg" mt="xl">
             <Dropzone.Accept>Drop files here</Dropzone.Accept>
-            <Dropzone.Reject>Pdf file less than 30mb</Dropzone.Reject>
+            <Dropzone.Reject>Incorrect file type</Dropzone.Reject>
             <Dropzone.Idle>Upload schematic file</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
@@ -157,7 +153,7 @@ export function NBTReader({
         </div>
       </Dropzone>
 
-      <Button
+      {/* <Button
         fullWidth
         className={classes.control}
         size="md"
@@ -165,7 +161,7 @@ export function NBTReader({
         onClick={() => openRef.current?.()}
       >
         Upload schematic
-      </Button>
+      </Button> */}
     </div>
   );
 }

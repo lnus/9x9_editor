@@ -80,12 +80,10 @@ export function HomePage() {
         </Center>
 
         <Collapse in={debugInfo}>
-          <Container>
-            <Title>JSON Data</Title>
-            <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
+          <Title>JSON Data</Title>
+          <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
 
-            <NBTDisplay nbtData={nbtData as SchematicNBT} />
-          </Container>
+          <NBTDisplay nbtData={nbtData as SchematicNBT} />
         </Collapse>
       </Container>
     </div>
