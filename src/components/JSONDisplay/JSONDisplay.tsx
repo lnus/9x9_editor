@@ -150,7 +150,7 @@ export function MaterialList({
         m="lg"
         onChange={(event) => setSearchQuery(event.currentTarget.value)}
       />
-      <Tabs color="red" radius="xs">
+      <Tabs radius="xs">
         <Tabs.List>
           {mods.map((mod, index) => (
             <Tabs.Tab key={index} value={mod} leftSection={<Icon3dCubeSphere />}>
@@ -161,13 +161,11 @@ export function MaterialList({
 
         {mods.map((mod, index) => (
           <Tabs.Panel key={index} value={mod} p={30}>
-            {items.map((item, index) => (
-              <div key={index}>
-                {item.item.id.split(':')[0] === mod && (
-                  <ItemDisplay key={item.item.id} item={item} updateItem={updateItem} />
-                )}
-              </div>
-            ))}
+            {items
+              .filter((item) => item.item.id.split(':')[0] === mod)
+              .map((item, index) => (
+                <ItemDisplay key={index} item={item} updateItem={updateItem} />
+              ))}
           </Tabs.Panel>
         ))}
       </Tabs>
