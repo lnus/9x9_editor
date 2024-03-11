@@ -1,6 +1,7 @@
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
 import { Button, Center } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import * as NBT from 'nbtify';
 import pako from 'pako';
 
@@ -31,6 +32,12 @@ export const NBTWriter = ({
 
     // Update the state
     setJsonData(newJsonData);
+
+    // Notify the user
+    notifications.show({
+      title: 'NBT data written',
+      message: 'NBT data has been written and JSON has been updated',
+    });
   };
 
   return (
