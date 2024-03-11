@@ -27,15 +27,6 @@ function ItemDisplay({ item }: { item: RootEntry }) {
       </Button>
     </Card>
   );
-
-  // return (
-  //   <List.Item key={item.item.id}>
-  //     <Group>
-  //       <span>{item.item.id}</span>
-  //       <Badge>{item.count}</Badge>
-  //     </Group>
-  //   </List.Item>
-  // );
 }
 
 export function MaterialList({

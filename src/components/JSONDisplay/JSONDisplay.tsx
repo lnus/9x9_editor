@@ -2,12 +2,16 @@ import { SchematicJSON, RootEntry } from '@/interfaces/SchematicJSON';
 import { Text, Image, Badge, Button, Card, Group, Grid, TextInput } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
-import { IconHash } from '@tabler/icons-react';
 import { Autocomplete } from '@mantine/core';
 import { MinecraftItems } from '@/data/MinecraftItems';
 
-// TODO: Fix any types, I'm just lazy at the moment
-const ModalContent = ({ name, updateItem }: any) => {
+const ModalContent = ({
+  name,
+  updateItem,
+}: {
+  name: string;
+  updateItem: (oldItem: string, newItem: string) => void;
+}) => {
   const [value, setValue] = useState('');
 
   const handleConfirm = () => {
@@ -84,11 +88,6 @@ export function MaterialList({
   updateItem: (oldItem: string, newItem: string) => void;
 }) {
   const [searchQuery, setSearchQuery] = useState('');
-
-  // This is checked in the parent component
-  // if (!jsonData) {
-  //   return <p>No JSON data found</p>;
-  // }
 
   return (
     <div>
