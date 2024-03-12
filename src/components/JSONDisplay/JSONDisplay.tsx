@@ -70,8 +70,11 @@ function ItemDisplay({
   if (true) {
     return (
       <Card shadow="sm" padding="lg">
-        <Group justify="space-between" mb={5}>
-          <Text fw={500}>{name}</Text>
+        <Text mb="sm" fw={500}>
+          {name}
+        </Text>
+        <Group justify="space-between">
+          <Text>Count {count}</Text>
           <Button
             onClick={() => {
               modals.open({
@@ -86,7 +89,6 @@ function ItemDisplay({
             Change Item Type
           </Button>
         </Group>
-        <Text>Count {count}</Text>
       </Card>
     );
   }

@@ -101,7 +101,7 @@ export function HomePage() {
 
   return (
     <div>
-      <Container fluid my="sm">
+      <Container size="xl" mx="auto" my="sm">
         {!jsonData && <NBTReader />}
         {jsonData && <MaterialList updateItem={updateItem} />}
       </Container>
