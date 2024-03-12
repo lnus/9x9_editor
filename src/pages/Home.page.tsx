@@ -1,6 +1,6 @@
 import { NBTReader } from '@/components/NBTReader/NBTReader';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
-import { Container, Grid, Skeleton, Stack } from '@mantine/core';
+import { Container } from '@mantine/core';
 import { MaterialList } from '@/components/JSONDisplay/JSONDisplay';
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
 import { notifications } from '@mantine/notifications';
@@ -21,6 +21,7 @@ export function HomePage() {
     return () => setAsideContent(null);
   }, [setAsideContent]);
 
+  // TODO: Move to a separate file
   const updateItem = async (oldItem: string, newItem: string) => {
     console.log('Updating item', oldItem, newItem);
 

@@ -1,14 +1,7 @@
 import { useData } from '@/contexts/DataContext';
-import { ActionIcon, Stack, Tooltip } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import {
-  IconAdjustments,
-  IconCheck,
-  IconClipboardCopy,
-  IconCopy,
-  IconDeviceFloppy,
-} from '@tabler/icons-react';
-import { useState } from 'react';
+import { IconCheck, IconCopy, IconDeviceFloppy } from '@tabler/icons-react';
 import { SettingsButton } from './SettingsButton';
 
 export const EditorMenu = () => {
@@ -36,7 +29,7 @@ export const EditorMenu = () => {
           const file = new Blob([JSON.stringify(jsonData)], { type: 'text/plain' });
           element.href = URL.createObjectURL(file);
           element.download = 'schematic.json';
-          document.body.appendChild(element); // Required for this to work in FireFox
+          document.body.appendChild(element); // Required for this to work in Firefox
           element.click();
         }}
         icon={<IconDeviceFloppy />}

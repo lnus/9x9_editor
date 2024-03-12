@@ -1,24 +1,10 @@
-import { SchematicJSON, RootEntry } from '@/interfaces/SchematicJSON';
-import {
-  Text,
-  Button,
-  Group,
-  TextInput,
-  Tabs,
-  Paper,
-  ThemeIcon,
-  rem,
-  Center,
-  Container,
-  Card,
-  Grid,
-} from '@mantine/core';
+import { RootEntry } from '@/interfaces/SchematicJSON';
+import { Text, Button, Group, TextInput, Tabs, Container, Card, Grid } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react';
 import { Autocomplete } from '@mantine/core';
 import { MinecraftItems } from '@/data/MinecraftItems';
-import { Icon3dCubeSphere, IconCompass } from '@tabler/icons-react';
-import classes from './StatsCard.module.css';
+import { Icon3dCubeSphere } from '@tabler/icons-react';
 import { useData } from '@/contexts/DataContext';
 
 const ModalContent = ({
