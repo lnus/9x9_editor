@@ -4,7 +4,7 @@ import { MantineLogo } from '@mantinex/mantine-logo';
 
 export function NavCollapse({ children }: { children: React.ReactNode }) {
   const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
-  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
+  const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure();
 
   return (
     <AppShell

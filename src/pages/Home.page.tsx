@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NBTReader } from '@/components/NBTReader/NBTReader';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
 import { NBTDisplay } from '@/components/NBTReader/NBTDisplay';
-import { Button, Center, Collapse, Container, Title } from '@mantine/core';
+import { Button, Center, Collapse, Container, Grid, SimpleGrid, Title, rem } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MaterialList } from '@/components/JSONDisplay/JSONDisplay';
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
@@ -12,11 +12,14 @@ import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
 import { JsonExport } from '@/components/JsonExport/JsonExport';
 import { CodeHighlight } from '@mantine/code-highlight';
+import { BlockCountGraph } from '@/components/Statistics/BlockCountGraph';
 
 export function HomePage() {
   const [debugInfo, { toggle }] = useDisclosure(false);
   const [jsonData, setJsonData] = useState<SchematicJSON | null>(null);
   const [nbtData, setNbtData] = useState<SchematicNBT | null>(null);
+
+  // TODO: Move these functions to a separate file
 
   const encodeAndSave = async () => {
     // Encode the data using NBT.write
@@ -95,32 +98,43 @@ export function HomePage() {
     });
   };
 
+  const PRIMARY_COL_HEIGHT = rem(300);
+  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2) - var(--mantine-spacing-md) / 2`;
+
   return (
     <div>
-      <Container>
-        <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
+      <Container my="md" fluid>
+        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
+          <Container h={PRIMARY_COL_HEIGHT}>
+            {jsonData && (
+              <MaterialList jsonData={jsonData} setJsonData={setJsonData} updateItem={updateItem} />
+            )}
+          </Container>
+          <Grid gutter="md">
+            <Grid.Col>
+              <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
+            </Grid.Col>
 
-        {nbtData && jsonData && (
-          <div>
-            {/* <NBTWriter nbtData={nbtData} jsonData={jsonData} setJsonData={setJsonData} /> */}
-            <JsonExport jsonData={jsonData as SchematicJSON} />
-          </div>
-        )}
+            <Grid.Col>
+              {nbtData && jsonData && (
+                <div>
+                  <JsonExport jsonData={jsonData as SchematicJSON} />
+                </div>
+              )}
+            </Grid.Col>
+          </Grid>
 
-        {jsonData && (
-          <MaterialList jsonData={jsonData} setJsonData={setJsonData} updateItem={updateItem} />
-        )}
+          {/* <Center p="sm">
+            <Button onClick={toggle}>Display debug information</Button>
+          </Center>
 
-        <Center p="sm">
-          <Button onClick={toggle}>Display debug information</Button>
-        </Center>
+          <Collapse in={debugInfo}>
+            <Title>JSON Data</Title>
+            <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
 
-        <Collapse in={debugInfo}>
-          <Title>JSON Data</Title>
-          <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
-
-          <NBTDisplay nbtData={nbtData as SchematicNBT} />
-        </Collapse>
+            <NBTDisplay nbtData={nbtData as SchematicNBT} />
+          </Collapse> */}
+        </SimpleGrid>
       </Container>
     </div>
   );
