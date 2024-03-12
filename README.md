@@ -4,6 +4,11 @@ For-fun project that allows editing of pastes from [9x9](https://reddit.com/r/9x
 
 Essentially, allows editing of pastes from the Building Gadgets mod.
 
+## Bugs to fix
+
+- Multiple of items of the same type creates unexpected behaviour
+- The last edit of an item, for some reason doesn't encode and save properly. Will fix.
+
 ## TODO List
 
 - [ ] Create a coherent design for the website
@@ -15,9 +20,6 @@ Essentially, allows editing of pastes from the Building Gadgets mod.
 - [ ] Paste preview (This will be really really trickt I think)
 - [ ] Add better UX for uploading pastes
 
-## Issues
-
-- Multiple of items of the same type creates unexpected behaviour
 
 # Build Instructions (Mantine + Vite template)
 
