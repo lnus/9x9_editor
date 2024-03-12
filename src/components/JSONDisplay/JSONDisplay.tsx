@@ -10,6 +10,8 @@ import {
   rem,
   Center,
   Container,
+  Card,
+  Grid,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react';
@@ -64,36 +66,30 @@ function ItemDisplay({
   const name = item.item.id;
   const count = item.count;
 
-  return (
-    <Paper radius="md" withBorder className={classes.card} mb={32}>
-      <ThemeIcon className={classes.icon} size={60} radius={60}>
-        <IconCompass style={{ width: rem(32), height: rem(32) }} stroke={1.5} />
-      </ThemeIcon>
-
-      <Text p={10} ta="center" fw={700} fz="lg" className={classes.title}>
-        {name}
-      </Text>
-      <Text c="dimmed" ta="center" fz="md">
-        {count}
-      </Text>
-
-      <Center>
-        <Button
-          color="red"
-          m="sm"
-          onClick={() => {
-            modals.open({
-              centered: true,
-              title: 'Change item type',
-              children: <ModalContent name={name} updateItem={updateItem} />,
-            });
-          }}
-        >
-          Change Item Type
-        </Button>
-      </Center>
-    </Paper>
-  );
+  // Reworking the card
+  if (true) {
+    return (
+      <Card shadow="sm" padding="lg">
+        <Group justify="space-between" mb={5}>
+          <Text fw={500}>{name}</Text>
+          <Button
+            onClick={() => {
+              modals.open({
+                centered: true,
+                title: 'Change item type',
+                children: <ModalContent name={name} updateItem={updateItem} />,
+              });
+            }}
+            variant="light"
+            size="xs"
+          >
+            Change Item Type
+          </Button>
+        </Group>
+        <Text>Count {count}</Text>
+      </Card>
+    );
+  }
 }
 
 export function MaterialList({
@@ -146,11 +142,16 @@ export function MaterialList({
 
         {mods.map((mod, index) => (
           <Tabs.Panel key={index} value={mod} p={30}>
-            {items
-              .filter((item) => item.item.id.split(':')[0] === mod)
-              .map((item, index) => (
-                <ItemDisplay key={index} item={item} updateItem={updateItem} />
-              ))}
+            <Grid>
+              {items
+                .filter((item) => item.item.id.split(':')[0] === mod)
+                .map((item, index) => (
+                  // Span might break with REALLY long item names
+                  <Grid.Col span={4} key={index}>
+                    <ItemDisplay key={index} item={item} updateItem={updateItem} />
+                  </Grid.Col>
+                ))}
+            </Grid>
           </Tabs.Panel>
         ))}
       </Tabs>

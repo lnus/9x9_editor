@@ -7,8 +7,6 @@ import { notifications } from '@mantine/notifications';
 import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
 import { useData } from '@/contexts/DataContext';
-import { JsonExport } from '@/components/JsonExport/JsonExport';
-import { ColorSchemeButton } from '@/components/ColorSchemeToggle/ColorSchemeButton';
 import { useAsideContent } from '@/contexts/AsideContentContext';
 import { useEffect } from 'react';
 import { EditorMenu } from '@/components/SettingsMenu/EditorMenu';
@@ -103,7 +101,7 @@ export function HomePage() {
 
   return (
     <div>
-      <Container fluid mx={0} my="sm">
+      <Container fluid my="sm">
         {!jsonData && <NBTReader />}
         {jsonData && <MaterialList updateItem={updateItem} />}
       </Container>
