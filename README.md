@@ -7,7 +7,7 @@ Essentially, allows editing of pastes from the Building Gadgets mod.
 ## Bugs to fix
 
 - Multiple of items of the same type creates unexpected behaviour
-- The last edit of an item, for some reason doesn't encode and save properly. Will fix.
+- ~~The last edit of an item, for some reason doesn't encode and save properly~~ Fixed!
 
 ## TODO List
 
@@ -17,7 +17,7 @@ Essentially, allows editing of pastes from the Building Gadgets mod.
 - [ ] Add support for 1.12.* version of the mod
 - [ ] Add paste sharing
 - [ ] Add paste saving (kinda the same as above)
-- [ ] Paste preview (This will be really really trickt I think)
+- [ ] Paste preview (This will be really really tricky I think)
 - [ ] Add better UX for uploading pastes
 
 
