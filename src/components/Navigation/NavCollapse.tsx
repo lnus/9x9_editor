@@ -14,13 +14,13 @@ export function NavCollapse({ children }: { children: React.ReactNode }) {
     <AppShell
       header={{ height: 60 }}
       navbar={{
-        width: 300,
+        width: 200,
         breakpoint: 'sm',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       aside={{
-        width: 80,
-        breakpoint: 'sm', // Probably not necessary since it's always collapsed
+        width: asideContent ? 80 : 0,
+        breakpoint: 'sm',
         collapsed: { mobile: true }, // Always collapsed on mobile
       }}
       padding="md"
@@ -33,7 +33,7 @@ export function NavCollapse({ children }: { children: React.ReactNode }) {
             <Burger opened={desktopOpened} onClick={toggleDesktop} visibleFrom="sm" size="sm" />
             <MantineLogo size={30} />
           </Group>
-          <Group justify="flex-end">
+          <Group justify="flex-end" mr="sm">
             <ColorSchemeButton />
           </Group>
         </Group>
