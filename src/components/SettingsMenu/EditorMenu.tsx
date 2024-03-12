@@ -1,8 +1,20 @@
 import { useData } from '@/contexts/DataContext';
-import { Stack } from '@mantine/core';
+import { Container, Divider, Space, Stack, Title } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
-import { IconCheck, IconCopy, IconDeviceFloppy } from '@tabler/icons-react';
+import {
+  IconArrowsShuffle,
+  IconChartPie,
+  IconCheck,
+  IconCopy,
+  IconDeviceFloppy,
+  IconGraph,
+  IconUpload,
+} from '@tabler/icons-react';
 import { SettingsButton } from './SettingsButton';
+import { modals } from '@mantine/modals';
+import { BlockCountGraph } from '../Statistics/BlockCountGraph';
+import { NBTWriter } from '../NBTReader/NBTWriter';
+import { NBTReader } from '../NBTReader/NBTReader';
 
 export const EditorMenu = () => {
   const { jsonData, setJsonData, nbtData, setNbtData } = useData();
@@ -33,6 +45,42 @@ export const EditorMenu = () => {
           element.click();
         }}
         icon={<IconDeviceFloppy />}
+      />
+      <SettingsButton
+        tooltipLabel="Upload schematic"
+        onClick={() => {
+          modals.open({
+            withCloseButton: false,
+            size: '60%',
+            centered: true,
+            children: <NBTReader />,
+          });
+        }}
+        icon={<IconUpload />}
+      />
+      <SettingsButton
+        tooltipLabel="Convert to another format"
+        onClick={() => {
+          modals.open({
+            withCloseButton: false,
+            centered: true,
+            children: <Title order={6}>Not implemented yet, sorry 😔</Title>,
+          });
+        }}
+        icon={<IconArrowsShuffle />}
+      />
+      <Space />
+      <SettingsButton
+        tooltipLabel="View block count chart"
+        onClick={() => {
+          modals.open({
+            withCloseButton: false,
+            size: '60%',
+            centered: true,
+            children: <BlockCountGraph />,
+          });
+        }}
+        icon={<IconChartPie />}
       />
     </Stack>
   );

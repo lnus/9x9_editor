@@ -1,22 +1,36 @@
-import { SchematicJSON } from '@/interfaces/SchematicJSON';
-import { DonutChart, DonutChartCell } from '@mantine/charts';
+import { useData } from '@/contexts/DataContext';
+import { DonutChart, DonutChartCell, RadarChart, RadarChartProps } from '@mantine/charts';
 import { useEffect, useState } from 'react';
 
-export const BlockCountGraph = ({ jsonData }: { jsonData: SchematicJSON }) => {
-  const [blockData, setBlockData] = useState<DonutChartCell[]>([]);
+const stringToColor = (str: string) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+  for (let i = 0; i < 3; i++) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += ('00' + value.toString(16)).substr(-2);
+  }
+  return color;
+};
+
+export const BlockCountGraph = () => {
+  const [blockData, setBlockData] = useState<Object[]>([]);
+  const { jsonData } = useData();
+
+  if (jsonData === null) {
+    return null;
+  }
 
   const countBlocks = () => {
-    const newBlockData: DonutChartCell[] = [];
+    const newBlockData: Object[] = [];
 
-    // { name: 'minecraft:dirt', value: count, color: '#ff0000' }
     jsonData.header.material_list.root_entry.forEach((entry) => {
-      // Calculate a random color
-      const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-
       newBlockData.push({
-        name: entry.item.id,
-        value: entry.count,
-        color: color,
+        block: entry.item.id,
+        count: entry.count,
       });
     });
 
@@ -27,5 +41,18 @@ export const BlockCountGraph = ({ jsonData }: { jsonData: SchematicJSON }) => {
     countBlocks();
   }, [jsonData]);
 
-  return <DonutChart data={blockData} withLabels />;
+  return (
+    <RadarChart
+      h={'70vh'}
+      data={blockData}
+      withPolarRadiusAxis
+      dataKey="block"
+      series={[
+        {
+          name: 'count',
+          color: 'blue',
+        },
+      ]}
+    />
+  );
 };

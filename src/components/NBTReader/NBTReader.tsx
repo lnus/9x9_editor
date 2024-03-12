@@ -92,7 +92,6 @@ export function NBTReader() {
       notifications.show({
         title: 'Schematic uploaded 🥳',
         message: 'The schematic was successfully uploaded and parsed',
-        color: 'green',
       });
     } catch (error) {
       console.error('Error parsing NBT', error);

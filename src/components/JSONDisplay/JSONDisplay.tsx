@@ -1,10 +1,20 @@
 import { RootEntry } from '@/interfaces/SchematicJSON';
-import { Text, Button, Group, TextInput, Tabs, Container, Card, Grid } from '@mantine/core';
+import {
+  Text,
+  Button,
+  Group,
+  TextInput,
+  Tabs,
+  Container,
+  Card,
+  Grid,
+  Tooltip,
+} from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useEffect, useState } from 'react';
 import { Autocomplete } from '@mantine/core';
 import { MinecraftItems } from '@/data/MinecraftItems';
-import { Icon3dCubeSphere } from '@tabler/icons-react';
+import { Icon3dCubeSphere, IconCubePlus } from '@tabler/icons-react';
 import { useData } from '@/contexts/DataContext';
 
 const ModalContent = ({
@@ -56,9 +66,11 @@ function ItemDisplay({
   if (true) {
     return (
       <Card shadow="sm" padding="lg">
-        <Text mb="sm" fw={500}>
-          {name}
-        </Text>
+        <Tooltip position="top-start" label={name} offset={5}>
+          <Text mb="sm" fw={500}>
+            {name}
+          </Text>
+        </Tooltip>
         <Group justify="space-between">
           <Text>Count {count}</Text>
           <Button
@@ -122,7 +134,7 @@ export function MaterialList({
       <Tabs radius="xs" orientation="vertical">
         <Tabs.List>
           {mods.map((mod, index) => (
-            <Tabs.Tab key={index} value={mod} leftSection={<Icon3dCubeSphere />}>
+            <Tabs.Tab key={index} value={mod} leftSection={<IconCubePlus />}>
               <Text size="xl">{mod.slice(0, 1).toUpperCase() + mod.slice(1)}</Text>
             </Tabs.Tab>
           ))}

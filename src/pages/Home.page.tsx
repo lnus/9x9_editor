@@ -66,7 +66,6 @@ export function HomePage() {
     notifications.show({
       title: 'Item(s) updated successfully!',
       message: `Updated all instances of ${oldItem} to ${newItem}`,
-      color: 'teal',
     });
   };
 
