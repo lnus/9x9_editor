@@ -1,35 +1,16 @@
-import { useState } from 'react';
 import { NBTReader } from '@/components/NBTReader/NBTReader';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
-import { NBTDisplay } from '@/components/NBTReader/NBTDisplay';
-import {
-  AppShell,
-  Button,
-  Center,
-  Collapse,
-  Container,
-  Grid,
-  SimpleGrid,
-  Skeleton,
-  Stack,
-  Title,
-  rem,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Container, Grid, Skeleton, Stack } from '@mantine/core';
 import { MaterialList } from '@/components/JSONDisplay/JSONDisplay';
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
 import { notifications } from '@mantine/notifications';
-import { NBTWriter } from '@/components/NBTReader/NBTWriter';
 import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
+import { useData } from '@/contexts/DataContext';
 import { JsonExport } from '@/components/JsonExport/JsonExport';
-import { CodeHighlight } from '@mantine/code-highlight';
-import { BlockCountGraph } from '@/components/Statistics/BlockCountGraph';
 
 export function HomePage() {
-  const [debugInfo, { toggle }] = useDisclosure(false);
-  const [jsonData, setJsonData] = useState<SchematicJSON | null>(null);
-  const [nbtData, setNbtData] = useState<SchematicNBT | null>(null);
+  const { jsonData, setJsonData, nbtData, setNbtData } = useData();
 
   // TODO: Move these functions to a separate file
 
@@ -117,16 +98,10 @@ export function HomePage() {
         <Grid grow>
           <Grid.Col span={1}>
             <Container fluid mx="xs">
-              {/* Depending on if JSON data, display either MaterialList or Dropdown */}
-              {!jsonData && <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />}
-
-              {jsonData && (
-                <MaterialList
-                  jsonData={jsonData}
-                  setJsonData={setJsonData}
-                  updateItem={updateItem}
-                />
-              )}
+              {!jsonData && <NBTReader />}
+              {jsonData && <MaterialList updateItem={updateItem} />}
+              {/* TODO: Remove Temporary json export button */}
+              {jsonData && <JsonExport />}
             </Container>
           </Grid.Col>
           <Grid.Col span={0}>

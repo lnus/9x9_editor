@@ -17,6 +17,7 @@ import { Autocomplete } from '@mantine/core';
 import { MinecraftItems } from '@/data/MinecraftItems';
 import { Icon3dCubeSphere, IconCompass } from '@tabler/icons-react';
 import classes from './StatsCard.module.css';
+import { useData } from '@/contexts/DataContext';
 
 const ModalContent = ({
   name,
@@ -92,37 +93,21 @@ function ItemDisplay({
         </Button>
       </Center>
     </Paper>
-
-    // <Card style={{ padding: '1em' }}>
-    //   <Group justify="center" gap="sm">
-    //     <Text>{name}</Text>
-    //     <Badge>{count}</Badge>
-    //   </Group>
-    //   {/* Open a modal to change the name */}
-    //   <Button
-    //     onClick={() => {
-    //       modals.open({
-    //         centered: true,
-    //         title: 'Change item type',
-    //         children: <ModalContent name={name} updateItem={updateItem} />,
-    //       });
-    //     }}
-    //   >
-    //     Change Name
-    //   </Button>
-    // </Card>
   );
 }
 
 export function MaterialList({
-  jsonData,
-  setJsonData, // Might not be used here
   updateItem,
 }: {
-  jsonData: SchematicJSON;
-  setJsonData: (json: SchematicJSON) => void;
   updateItem: (oldItem: string, newItem: string) => void;
 }) {
+  const { jsonData } = useData();
+
+  // Should never happen but just in case
+  if (!jsonData) {
+    return <Text>No JSON data found</Text>;
+  }
+
   const [searchQuery, setSearchQuery] = useState('');
   const [items, setItems] = useState<RootEntry[]>(jsonData.header.material_list.root_entry);
   const [mods, setMods] = useState<string[]>([]);

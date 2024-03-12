@@ -7,14 +7,11 @@ import pako from 'pako';
 import * as NBT from 'nbtify';
 import { notifications } from '@mantine/notifications';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
+import { useData } from '@/contexts/DataContext';
 
-export function NBTReader({
-  setNbtData,
-  setJsonData,
-}: {
-  setNbtData: (nbt: SchematicNBT) => void;
-  setJsonData: (json: any) => void;
-}) {
+export function NBTReader() {
+  const { setNbtData, setJsonData } = useData();
+
   // ANCHOR: UX state
   const theme = useMantineTheme();
   const openRef = useRef<() => void>(null);

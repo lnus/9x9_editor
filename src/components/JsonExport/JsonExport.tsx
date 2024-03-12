@@ -1,9 +1,10 @@
-import { SchematicJSON } from '@/interfaces/SchematicJSON';
+import { useData } from '@/contexts/DataContext';
 import { Button, rem, Tooltip } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { IconCopy, IconCheck } from '@tabler/icons-react';
 
-export const JsonExport = ({ jsonData }: { jsonData: SchematicJSON }) => {
+export const JsonExport = () => {
+  const { jsonData } = useData();
   const clipboard = useClipboard();
   return (
     <Tooltip
