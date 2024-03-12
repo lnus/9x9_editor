@@ -62,7 +62,7 @@ export function HomePage() {
   };
 
   return (
-    <NavCollapse asideContent={<EditorMenu />}>
+    <NavCollapse asideContent={jsonData ? <EditorMenu /> : null}>
       <Container size="xl" mx="auto" my="sm">
         {!jsonData && <NBTReader />}
         {jsonData && <MaterialList updateItem={updateItem} />}

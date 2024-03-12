@@ -1,5 +1,5 @@
 import { useData } from '@/contexts/DataContext';
-import { Container, Divider, Space, Stack, Title } from '@mantine/core';
+import { Space, Stack, Title } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import {
   IconArrowsShuffle,
@@ -7,13 +7,12 @@ import {
   IconCheck,
   IconCopy,
   IconDeviceFloppy,
-  IconGraph,
+  IconShare,
   IconUpload,
 } from '@tabler/icons-react';
 import { SettingsButton } from './SettingsButton';
 import { modals } from '@mantine/modals';
 import { BlockCountGraph } from '../Statistics/BlockCountGraph';
-import { NBTWriter } from '../NBTReader/NBTWriter';
 import { NBTReader } from '../NBTReader/NBTReader';
 
 export const EditorMenu = () => {
@@ -47,7 +46,7 @@ export const EditorMenu = () => {
         icon={<IconDeviceFloppy />}
       />
       <SettingsButton
-        tooltipLabel="Upload schematic"
+        tooltipLabel="Upload new schematic"
         onClick={() => {
           modals.open({
             withCloseButton: false,
@@ -68,6 +67,17 @@ export const EditorMenu = () => {
           });
         }}
         icon={<IconArrowsShuffle />}
+      />
+      <SettingsButton
+        tooltipLabel="Share to eightyone"
+        onClick={() => {
+          modals.open({
+            withCloseButton: false,
+            centered: true,
+            children: <Title order={6}>Not implemented yet, sorry 😔</Title>,
+          });
+        }}
+        icon={<IconShare />}
       />
       <Space />
       <SettingsButton

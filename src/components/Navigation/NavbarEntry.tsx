@@ -15,11 +15,11 @@ export const NavbarEntry = ({
 }) => {
   return (
     <Tooltip label={tooltipLabel} position="right" offset={5}>
-      <Link to={href}>
+      <Anchor component={Link} to={href}>
         <Button fullWidth leftSection={icon} variant="light">
           {content}
         </Button>
-      </Link>
+      </Anchor>
     </Tooltip>
   );
 };

@@ -1,10 +1,15 @@
-import { Anchor, AppShell, Burger, Button, Group, Title } from '@mantine/core';
+import { Anchor, AppShell, Burger, Button, Group, Stack, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ColorSchemeButton } from '../ColorSchemeToggle/ColorSchemeButton';
-import { useAsideContent } from '@/contexts/AsideContentContext';
 import React from 'react';
-import { IconRectangularPrismPlus } from '@tabler/icons-react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  IconEdit,
+  IconPackages,
+  IconParentheses,
+  IconRectangularPrismPlus,
+} from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
+import { NavbarEntry } from './NavbarEntry';
 
 export function NavCollapse({
   children,
@@ -21,14 +26,14 @@ export function NavCollapse({
     <AppShell
       header={{ height: 60 }}
       navbar={{
-        width: 300,
+        width: 200,
         breakpoint: 'sm',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
       aside={{
-        width: asideContent ? 80 : 0,
+        width: 80,
         breakpoint: 'sm',
-        collapsed: { mobile: true }, // Always collapsed on mobile
+        collapsed: { mobile: true, desktop: asideContent ? false : true },
       }}
       padding="md"
     >
@@ -51,13 +56,15 @@ export function NavCollapse({
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        <Button
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          Test
-        </Button>
+        <Stack>
+          <NavbarEntry href="/" icon={<IconEdit />} tooltipLabel="Editor" content="Editor" />
+          <NavbarEntry
+            href="/schematics"
+            icon={<IconPackages />}
+            tooltipLabel="Schematics"
+            content="Schematics"
+          />
+        </Stack>
       </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
