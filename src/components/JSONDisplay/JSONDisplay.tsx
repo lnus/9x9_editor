@@ -45,7 +45,7 @@ const ModalContent = ({
         }}
       />
 
-      <Button color="teal" onClick={() => handleConfirm()}>
+      <Button variant="light" onClick={() => handleConfirm()}>
         Confirm change
       </Button>
     </Group>

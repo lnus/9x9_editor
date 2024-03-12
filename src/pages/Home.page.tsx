@@ -7,19 +7,11 @@ import { notifications } from '@mantine/notifications';
 import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
 import { useData } from '@/contexts/DataContext';
-import { useAsideContent } from '@/contexts/AsideContentContext';
-import { useEffect } from 'react';
 import { EditorMenu } from '@/components/SettingsMenu/EditorMenu';
+import { NavCollapse } from '@/components/Navigation/NavCollapse';
 
 export function HomePage() {
   const { jsonData, setJsonData, nbtData, setNbtData } = useData();
-  const { setAsideContent } = useAsideContent();
-
-  // Set correct aside content on mount
-  useEffect(() => {
-    setAsideContent(<EditorMenu />);
-    return () => setAsideContent(null);
-  }, [setAsideContent]);
 
   // TODO: Move to a separate file
   const updateItem = async (oldItem: string, newItem: string) => {
@@ -70,11 +62,11 @@ export function HomePage() {
   };
 
   return (
-    <div>
+    <NavCollapse asideContent={<EditorMenu />}>
       <Container size="xl" mx="auto" my="sm">
         {!jsonData && <NBTReader />}
         {jsonData && <MaterialList updateItem={updateItem} />}
       </Container>
-    </div>
+    </NavCollapse>
   );
 }
