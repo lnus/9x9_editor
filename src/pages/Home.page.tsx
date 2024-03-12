@@ -40,20 +40,29 @@ export function HomePage() {
     console.log('Encoded NBT data', result);
     console.log('Decoded NBT data', decoded);
 
-    // Modify NBT thing
-    // First, find the index of the item
-    const index = decoded.data.data.findIndex((item: any) => item.state.Name === oldItem);
-    console.log('Index of item', index);
+    // Modify NBT
+    // Find all indices of the old item in the NBT data
+    // They could have different states
+    const indices = decoded.data.data
+      .map((item: any, index: number) => (item.state.Name === oldItem ? index : -1))
+      .filter((index) => index !== -1);
+    console.log('Indices of item', indices);
 
-    // Then, replace the item with the new one
-    decoded.data.data[index].state.Name = newItem;
+    // Replace all instances of the old item with the new one
+    indices.forEach((index) => {
+      decoded.data.data[index].state.Name = newItem;
+      console.log('Updated item', decoded.data.data[index]);
+    });
 
     setNbtData(decoded);
 
+    // TODO
+    // Maybe directly update the JSON body here, by encoding the NBT.
+
     // Notifying the user
     notifications.show({
-      title: 'Item updated',
-      message: `Updated ${oldItem} to ${newItem}`,
+      title: 'Item(s) updated',
+      message: `Updated all instances of ${oldItem} to ${newItem}`,
       color: 'teal',
     });
   };
