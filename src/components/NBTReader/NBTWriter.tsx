@@ -5,6 +5,9 @@ import { notifications } from '@mantine/notifications';
 import * as NBT from 'nbtify';
 import pako from 'pako';
 
+// This entire component might as well be removed
+// Function has been moved to src/pages/Home.page.tsx
+
 export const NBTWriter = ({
   nbtData,
   jsonData,

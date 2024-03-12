@@ -18,6 +18,33 @@ export function HomePage() {
   const [jsonData, setJsonData] = useState<SchematicJSON | null>(null);
   const [nbtData, setNbtData] = useState<SchematicNBT | null>(null);
 
+  const encodeAndSave = async () => {
+    // Encode the data using NBT.write
+    console.log(nbtData);
+    const result: Uint8Array = await NBT.write(nbtData as NBT.NBTData);
+
+    console.log('Encoded NBT data', result);
+
+    // Encode into base64
+    const base64Data = btoa(String.fromCharCode(...result));
+
+    console.log('Base64 NBT data', base64Data);
+
+    // Update the JSON data (only body)
+    const newJsonData = { ...jsonData } as SchematicJSON;
+    newJsonData.body = base64Data;
+
+    // Update the state
+    setJsonData(newJsonData);
+
+    // Notify the user
+    // TODO: Remove in prod, this isn't necessary since we run it all the time now
+    notifications.show({
+      title: 'NBT data written',
+      message: 'NBT data has been written and JSON has been updated',
+    });
+  };
+
   const updateItem = async (oldItem: string, newItem: string) => {
     console.log('Updating item', oldItem, newItem);
 
@@ -58,6 +85,7 @@ export function HomePage() {
 
     // TODO
     // Maybe directly update the JSON body here, by encoding the NBT.
+    await encodeAndSave();
 
     // Notifying the user
     notifications.show({
@@ -74,7 +102,7 @@ export function HomePage() {
 
         {nbtData && jsonData && (
           <div>
-            <NBTWriter nbtData={nbtData} jsonData={jsonData} setJsonData={setJsonData} />
+            {/* <NBTWriter nbtData={nbtData} jsonData={jsonData} setJsonData={setJsonData} /> */}
             <JsonExport jsonData={jsonData as SchematicJSON} />
           </div>
         )}

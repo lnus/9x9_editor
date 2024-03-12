@@ -13,6 +13,11 @@ Essentially, allows editing of pastes from the Building Gadgets mod.
 - [ ] Add paste sharing
 - [ ] Add paste saving (kinda the same as above)
 - [ ] Paste preview (This will be really really trickt I think)
+- [ ] Add better UX for uploading pastes
+
+## Issues
+
+- Multiple of items of the same type creates unexpected behaviour
 
 # Build Instructions (Mantine + Vite template)
 
