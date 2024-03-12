@@ -118,7 +118,7 @@ export function NBTReader({
         className={classes.dropzone}
         radius="md"
         accept={['application/json']}
-        maxSize={30000 * 1024 ** 2}
+        maxSize={1024 * 1024 ** 2} // 1mb
       >
         <div style={{ pointerEvents: 'none' }}>
           <Group justify="center">
@@ -147,8 +147,7 @@ export function NBTReader({
             <Dropzone.Idle>Upload schematic file</Dropzone.Idle>
           </Text>
           <Text ta="center" fz="sm" mt="xs" c="dimmed">
-            Drag&apos;n&apos;drop files here to upload. We can accept only <i>.json</i> files that
-            are less than 30000mb in size. (It's client-side, so who cares?)
+            Drag&apos;n&apos;drop schematic files here to upload.
           </Text>
         </div>
       </Dropzone>

@@ -14,8 +14,21 @@ export function NavCollapse({ children }: { children: React.ReactNode }) {
         breakpoint: 'sm',
         collapsed: { mobile: !mobileOpened, desktop: !desktopOpened },
       }}
+      // aside={{
+      //   width: 80,
+      //   breakpoint: 'sm', // Probably not necessary since it's always collapsed
+      //   collapsed: { mobile: true }, // Always collapsed on mobile
+      // }}
       padding="md"
     >
+      {/* Only render on "/" */}
+      {/* <AppShell.Aside p="md">
+        <Stack align="center">
+          {Array.from({ length: 15 }).map((_, index) => (
+            <Skeleton key={index} height={40} width={40} radius="md" />
+          ))}
+        </Stack>
+      </AppShell.Aside> */}
       <AppShell.Header>
         <Group h="100%" px="md">
           <Burger opened={mobileOpened} onClick={toggleMobile} hiddenFrom="sm" size="sm" />

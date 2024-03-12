@@ -2,7 +2,19 @@ import { useState } from 'react';
 import { NBTReader } from '@/components/NBTReader/NBTReader';
 import { SchematicNBT } from '@/interfaces/SchematicNBT';
 import { NBTDisplay } from '@/components/NBTReader/NBTDisplay';
-import { Button, Center, Collapse, Container, Grid, SimpleGrid, Title, rem } from '@mantine/core';
+import {
+  AppShell,
+  Button,
+  Center,
+  Collapse,
+  Container,
+  Grid,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Title,
+  rem,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MaterialList } from '@/components/JSONDisplay/JSONDisplay';
 import { SchematicJSON } from '@/interfaces/SchematicJSON';
@@ -98,43 +110,33 @@ export function HomePage() {
     });
   };
 
-  const PRIMARY_COL_HEIGHT = rem(300);
-  const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2) - var(--mantine-spacing-md) / 2`;
-
   return (
     <div>
-      <Container my="md" fluid>
-        <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
-          <Container h={PRIMARY_COL_HEIGHT}>
-            {jsonData && (
-              <MaterialList jsonData={jsonData} setJsonData={setJsonData} updateItem={updateItem} />
-            )}
-          </Container>
-          <Grid gutter="md">
-            <Grid.Col>
-              <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />
-            </Grid.Col>
+      <Container fluid mx={0} my="sm">
+        {/* Split the page into two columns, main content on left, and menu on right */}
+        <Grid grow>
+          <Grid.Col span={1}>
+            <Container fluid mx="xs">
+              {/* Depending on if JSON data, display either MaterialList or Dropdown */}
+              {!jsonData && <NBTReader setNbtData={setNbtData} setJsonData={setJsonData} />}
 
-            <Grid.Col>
-              {nbtData && jsonData && (
-                <div>
-                  <JsonExport jsonData={jsonData as SchematicJSON} />
-                </div>
+              {jsonData && (
+                <MaterialList
+                  jsonData={jsonData}
+                  setJsonData={setJsonData}
+                  updateItem={updateItem}
+                />
               )}
-            </Grid.Col>
-          </Grid>
-
-          {/* <Center p="sm">
-            <Button onClick={toggle}>Display debug information</Button>
-          </Center>
-
-          <Collapse in={debugInfo}>
-            <Title>JSON Data</Title>
-            <CodeHighlight code={JSON.stringify(jsonData, null, 2)} />
-
-            <NBTDisplay nbtData={nbtData as SchematicNBT} />
-          </Collapse> */}
-        </SimpleGrid>
+            </Container>
+          </Grid.Col>
+          <Grid.Col span={0}>
+            <Stack align="center">
+              {Array.from({ length: 15 }).map((_, index) => (
+                <Skeleton key={index} height={40} width={40} radius="md" />
+              ))}
+            </Stack>
+          </Grid.Col>
+        </Grid>
       </Container>
     </div>
   );

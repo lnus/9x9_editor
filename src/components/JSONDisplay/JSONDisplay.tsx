@@ -142,15 +142,15 @@ export function MaterialList({
   }, [jsonData, searchQuery]);
 
   return (
-    <Container>
+    <Container fluid>
       <TextInput
-        placeholder="Search for an item"
+        placeholder={'Search for an item'} // TODO: Add keyboard shortcut
         radius="md"
         value={searchQuery}
         m="lg"
         onChange={(event) => setSearchQuery(event.currentTarget.value)}
       />
-      <Tabs radius="xs">
+      <Tabs radius="xs" orientation="vertical">
         <Tabs.List>
           {mods.map((mod, index) => (
             <Tabs.Tab key={index} value={mod} leftSection={<Icon3dCubeSphere />}>
