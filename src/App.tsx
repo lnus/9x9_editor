@@ -10,18 +10,21 @@ import { Router } from './Router';
 import { theme } from './theme';
 import { NavCollapse } from './components/Navigation/NavCollapse';
 import { DataProvider } from './contexts/DataContext';
+import { AsideContentProvider } from './contexts/AsideContentContext';
 
 export default function App() {
   return (
-    <DataProvider>
-      <MantineProvider theme={theme}>
-        <ModalsProvider>
-          <Notifications position="bottom-right" />
-          <NavCollapse>
-            <Router />
-          </NavCollapse>
-        </ModalsProvider>
-      </MantineProvider>
-    </DataProvider>
+    <AsideContentProvider>
+      <DataProvider>
+        <MantineProvider theme={theme}>
+          <ModalsProvider>
+            <Notifications position="bottom-right" />
+            <NavCollapse>
+              <Router />
+            </NavCollapse>
+          </ModalsProvider>
+        </MantineProvider>
+      </DataProvider>
+    </AsideContentProvider>
   );
 }

@@ -8,12 +8,22 @@ import { NBTData } from 'nbtify';
 import * as NBT from 'nbtify';
 import { useData } from '@/contexts/DataContext';
 import { JsonExport } from '@/components/JsonExport/JsonExport';
+import { ColorSchemeButton } from '@/components/ColorSchemeToggle/ColorSchemeButton';
+import { useAsideContent } from '@/contexts/AsideContentContext';
+import { useEffect } from 'react';
+import { EditorMenu } from '@/components/SettingsMenu/EditorMenu';
 
 export function HomePage() {
   const { jsonData, setJsonData, nbtData, setNbtData } = useData();
+  const { setAsideContent } = useAsideContent();
+
+  // Set correct aside content on mount
+  useEffect(() => {
+    setAsideContent(<EditorMenu />);
+    return () => setAsideContent(null);
+  }, [setAsideContent]);
 
   // TODO: Move these functions to a separate file
-
   const encodeAndSave = async () => {
     // Encode the data using NBT.write
     console.log(nbtData);
@@ -94,24 +104,8 @@ export function HomePage() {
   return (
     <div>
       <Container fluid mx={0} my="sm">
-        {/* Split the page into two columns, main content on left, and menu on right */}
-        <Grid grow>
-          <Grid.Col span={1}>
-            <Container fluid mx="xs">
-              {!jsonData && <NBTReader />}
-              {jsonData && <MaterialList updateItem={updateItem} />}
-              {/* TODO: Remove Temporary json export button */}
-              {jsonData && <JsonExport />}
-            </Container>
-          </Grid.Col>
-          <Grid.Col span={0}>
-            <Stack align="center">
-              {Array.from({ length: 15 }).map((_, index) => (
-                <Skeleton key={index} height={40} width={40} radius="md" />
-              ))}
-            </Stack>
-          </Grid.Col>
-        </Grid>
+        {!jsonData && <NBTReader />}
+        {jsonData && <MaterialList updateItem={updateItem} />}
       </Container>
     </div>
   );
